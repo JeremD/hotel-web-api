@@ -27,7 +27,7 @@ public class ClientController {
 		this.clientRepository = clientRepository;
 	}
 
-	// Liste des clients
+	// Liste des clients avec une page
 	@GetMapping
 	public List<Client> listerClient(@RequestParam("start") int start, @RequestParam("size") int size) {
 		List<Client> clients = clientRepository.findAll();
