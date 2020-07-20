@@ -1,4 +1,4 @@
-package dev.hotel.controleur;
+package dev.hotel.controller;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import dev.hotel.repository.ClientRepository;
 
 @RestController
 @RequestMapping("/clients")
-public class ClientControleur {
+public class ClientController {
 
 	/** clientRepository */
 	private ClientRepository clientRepository;
@@ -22,7 +22,7 @@ public class ClientControleur {
 	 * 
 	 * @param clientRepository
 	 */
-	public ClientControleur(ClientRepository clientRepository) {
+	public ClientController(ClientRepository clientRepository) {
 		super();
 		this.clientRepository = clientRepository;
 	}
