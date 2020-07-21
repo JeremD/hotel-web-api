@@ -1,6 +1,7 @@
 package dev.hotel.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
@@ -43,19 +44,24 @@ public class ClientController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED)
 				.body(clientRepository.findAll(PageRequest.of(start, size)).toList());
 	}
-	
+
 	// Lister un client selon l'uuid avec une page
 	@GetMapping("/clients/{uuid}")
 	public ResponseEntity<?> listerClientUUID(@PathVariable String uuid) {
 
+		Optional<Client> findClient = clientRepository.findByUuid(UUID.fromString(uuid));
+
+		// Retourner une erreur si paramètres incorrects
+		if (uuid == null || !uuid.matches("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect request!");
+		} 
+		
 		// Retourner une erreur si client non trouvé
-		if (uuid == null) {
+		else if (findClient.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found!");
 		}
 
-		return ResponseEntity.status(HttpStatus.ACCEPTED)
-				.body(clientRepository.findByUuid(UUID.fromString(uuid)));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(findClient);
 	}
-	
-	
+
 }
