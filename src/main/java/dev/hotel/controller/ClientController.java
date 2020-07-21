@@ -30,7 +30,7 @@ public class ClientController {
 		this.clientRepository = clientRepository;
 	}
 
-	// Liste des clients avec une page
+	// Lister les clients avec une page
 	@GetMapping("/clients")
 	public ResponseEntity<?> listerClient(@RequestParam("start") Integer start, @RequestParam("size") Integer size) {
 

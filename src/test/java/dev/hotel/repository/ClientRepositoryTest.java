@@ -36,28 +36,26 @@ public class ClientRepositoryTest {
 	ClientRepository clientRepository;
 
 	@Test
-	void listerClient() throws Exception {
+	void listerClientTest() throws Exception {
 
-		List<Client> listClient = new ArrayList<>();
-
+		// Ajout de client
 		Client addClient = new Client("GILBERT", "Paul");
-
-		// Création d'une page de liste de client
-		Page<Client> pageClient = new PageImpl<>(listClient);
-
-		// Génération d'un UUID
 		addClient.setUuid(UUID.fromString("9e9c730d-a357-4dd0-b027-c8e1b079664d"));
 
 		// Stockage des clients dans une liste
+		List<Client> listClient = new ArrayList<>();
 		listClient.add(addClient);
+		
+		// Création d'une page de liste de client
+		Page<Client> pageClient = new PageImpl<>(listClient);
 
 		// Liste des clients avec la page
-		Mockito.when(clientRepository.findAll(PageRequest.of(1, 5))).thenReturn(pageClient);
+		Mockito.when(clientRepository.findAll(PageRequest.of(0, 5))).thenReturn(pageClient);
 
-		// Test Mockito
+		// Test Mockito (requête + réponse JSON)
 		mockMvc.perform(MockMvcRequestBuilders.get("/clients").param("start", "10").param("size", "10"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].nom").isNotEmpty())
+				.andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid").isNotEmpty())
 				.andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid").value("9e9c730d-a357-4dd0-b027-c8e1b079664d"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$[0].nom").value("GILBERT"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$[0].prenoms").value("Paul"));
