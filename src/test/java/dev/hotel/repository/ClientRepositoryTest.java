@@ -44,7 +44,7 @@ public class ClientRepositoryTest {
 		
 		Client addClient2 = new Client("CLEM", "Tom");
 		addClient2.setUuid(UUID.fromString("de6df01a-8081-432a-a1ee-59687dc31e46"));
-
+											
 		// Stockage des clients dans une liste
 		List<Client> listClient = new ArrayList<>();
 		listClient.add(addClient);
