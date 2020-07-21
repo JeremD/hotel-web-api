@@ -10,15 +10,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import dev.hotel.controller.ClientController;
 import dev.hotel.entite.Client;
+import dev.hotel.service.ClientService;
 
 @WebMvcTest(ClientController.class)
 public class ClientRepositoryTest {
@@ -27,7 +25,7 @@ public class ClientRepositoryTest {
 	MockMvc mockMvc;
 
 	@MockBean
-	ClientRepository clientRepository;
+	ClientService clientService;
 
 	@Test
 	void listerClientTest() throws Exception {
@@ -44,11 +42,8 @@ public class ClientRepositoryTest {
 		listClient.add(addClient);
 		listClient.add(addClient2);
 
-		// Création d'une page de liste de client
-		Page<Client> pageClient = new PageImpl<>(listClient);
-
-		// Liste des clients avec la page
-		Mockito.when(clientRepository.findAll(PageRequest.of(0, 5))).thenReturn(pageClient);
+		// Liste des clients
+		Mockito.when(clientService.lister(0, 5)).thenReturn(listClient);
 
 		// Test Mockito (requête + réponse JSON)
 		mockMvc.perform(MockMvcRequestBuilders.get("/clients").param("start", "0").param("size", "5"))
@@ -69,7 +64,7 @@ public class ClientRepositoryTest {
 		// Stockage du client dans un container optional
 		Optional<Client> listClient = Optional.of(addClient);
 
-		Mockito.when(clientRepository.findById(addClient.getUuid())).thenReturn(listClient);
+		Mockito.when(clientService.afficher("f623d799-e1ec-4f8d-9c95-862a807b589e")).thenReturn(listClient);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clients/f623d799-e1ec-4f8d-9c95-862a807b589e"))
 				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
