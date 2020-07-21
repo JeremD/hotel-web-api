@@ -38,7 +38,7 @@ public class ClientController {
 
 		// Retourner une erreur si paramètres incorrects
 		if (size == null || start == null || start < 0 || size <= 0) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Request error!");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect request!");
 		}
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED)
@@ -49,13 +49,13 @@ public class ClientController {
 	@GetMapping("/clients/{uuid}")
 	public ResponseEntity<?> listerClientUUID(@PathVariable String uuid) {
 
-		Optional<Client> findClient = clientRepository.findByUuid(UUID.fromString(uuid));
+		Optional<Client> findClient = clientRepository.findById(UUID.fromString(uuid));
 
 		// Retourner une erreur si paramètres incorrects
 		if (uuid == null || !uuid.matches("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect request!");
-		} 
-		
+		}
+
 		// Retourner une erreur si client non trouvé
 		else if (findClient.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found!");

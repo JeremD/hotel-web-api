@@ -1,15 +1,13 @@
 package dev.hotel.repository;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
@@ -18,10 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
-
-import org.springframework.data.domain.Sort;
 
 import dev.hotel.controller.ClientController;
 import dev.hotel.entite.Client;
@@ -41,15 +35,15 @@ public class ClientRepositoryTest {
 		// Ajout de client
 		Client addClient = new Client("GILBERT", "Paul");
 		addClient.setUuid(UUID.fromString("9e9c730d-a357-4dd0-b027-c8e1b079664d"));
-		
+
 		Client addClient2 = new Client("CLEM", "Tom");
 		addClient2.setUuid(UUID.fromString("de6df01a-8081-432a-a1ee-59687dc31e46"));
-											
+
 		// Stockage des clients dans une liste
 		List<Client> listClient = new ArrayList<>();
 		listClient.add(addClient);
 		listClient.add(addClient2);
-		
+
 		// Création d'une page de liste de client
 		Page<Client> pageClient = new PageImpl<>(listClient);
 
@@ -63,6 +57,27 @@ public class ClientRepositoryTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid").value("9e9c730d-a357-4dd0-b027-c8e1b079664d"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$[0].nom").value("GILBERT"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$[0].prenoms").value("Paul"));
+	}
+
+	@Test
+	void listerClientParUuid() throws Exception {
+
+		// Ajout de client
+		Client addClient = new Client("TREV", "Martin");
+		addClient.setUuid(UUID.fromString("f623d799-e1ec-4f8d-9c95-862a807b589e"));
+
+		// Stockage du client dans un container optional
+		Optional<Client> listClient = Optional.of(addClient);
+
+		Mockito.when(clientRepository.findById(addClient.getUuid())).thenReturn(listClient);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/clients/f623d799-e1ec-4f8d-9c95-862a807b589e"))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.uuid").isNotEmpty())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.uuid").value("f623d799-e1ec-4f8d-9c95-862a807b589e"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.nom").value(addClient.getNom()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.prenoms").value(addClient.getPrenoms()));
+
 	}
 
 }
