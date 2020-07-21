@@ -14,11 +14,11 @@ import dev.hotel.entite.Client;
 import dev.hotel.repository.ClientRepository;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping
 public class ClientController {
 
 	/** clientRepository */
-	private ClientRepository clientRepository;
+	protected ClientRepository clientRepository;
 
 	/**
 	 * Constructor
@@ -30,16 +30,16 @@ public class ClientController {
 		this.clientRepository = clientRepository;
 	}
 
-	// Liste des clients avec une page 
-	@GetMapping
+	// Liste des clients avec une page
+	@GetMapping("/clients")
 	public ResponseEntity<?> listerClient(@RequestParam("start") Integer start, @RequestParam("size") Integer size) {
-		
+
 		// Retourner une erreur si paramètres incorrects
-		if (size == null || start == null || start < 0 || size <=0) {
+		if (size == null || start == null || start < 0 || size <= 0) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Request error!");
 		}
-		
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(
-				clientRepository.findAll(PageRequest.of(start, size)).toList());
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED)
+				.body(clientRepository.findAll(PageRequest.of(start, size)).toList());
 	}
 }
