@@ -20,7 +20,7 @@ public class ReservationDto {
 	private LocalDate dateFin;
 
 	/** client */
-	private String clientUuid;
+	private Client client;
 
 	/** chambres */
 	private List<Chambre> chambres = new ArrayList<>();
