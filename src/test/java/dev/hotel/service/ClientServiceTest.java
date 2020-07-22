@@ -1,4 +1,4 @@
-package dev.hotel.repository;
+package dev.hotel.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import dev.hotel.entite.Client;
 import dev.hotel.service.ClientService;
 
 @WebMvcTest(ClientController.class)
-public class ClientRepositoryTest {
+public class ClientServiceTest {
 
 	@Autowired
 	MockMvc mockMvc;
