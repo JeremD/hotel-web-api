@@ -30,7 +30,7 @@ public class ClientController {
 	/**
 	 * Constructor
 	 * 
-	 * @param clientRepository
+	 * @param clientService
 	 */
 	public ClientController(ClientService clientService) {
 		this.clientService = clientService;

@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import dev.hotel.controller.ClientController;
 import dev.hotel.entite.Client;
 import dev.hotel.service.ClientService;
 

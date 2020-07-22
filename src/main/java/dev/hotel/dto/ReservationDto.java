@@ -1,14 +1,17 @@
-package dev.hotel.entite;
+package dev.hotel.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-@Entity
-public class Reservation extends BaseEntite {
+import dev.hotel.entite.Chambre;
+import dev.hotel.entite.Client;
+
+public class ReservationDto {
+
+	/** uuid */
+	private UUID uuid;
 
 	/** dateDebut */
 	private LocalDate dateDebut;
@@ -17,71 +20,84 @@ public class Reservation extends BaseEntite {
 	private LocalDate dateFin;
 
 	/** client */
-	@ManyToOne
-	private Client client;
+	private String clientUuid;
 
 	/** chambres */
-	@ManyToMany
 	private List<Chambre> chambres = new ArrayList<>();
 
 	/**
 	 * Constructor
 	 * 
 	 */
-	public Reservation() {
+	public ReservationDto() {
 	}
 
 	/**
-	 * Constructor
+	 * Getter
 	 * 
-	 * @param dateDebut
-	 * @param dateFin
-	 * @param client
-	 * @param chambres
+	 * @return uuid
 	 */
-	public Reservation(LocalDate dateDebut, LocalDate dateFin, Client client, List<Chambre> chambres) {
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.client = client;
-		this.chambres = chambres;
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	/**
-	 * @return
+	 * Setter
+	 * 
+	 * @param uuid to set
+	 */
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return dateDebut
 	 */
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
 	/**
-	 * @param dateDebut
+	 * Setter
+	 * 
+	 * @param dateDebut to set
 	 */
 	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 	/**
-	 * @return
+	 * Getter
+	 * 
+	 * @return dateFin
 	 */
 	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
 	/**
-	 * @param dateFin
+	 * Setter
+	 * 
+	 * @param dateFin to set
 	 */
 	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 
 	/**
-	 * @return
+	 * Getter
+	 * 
+	 * @return clientUuid
 	 */
-	public Client getClient() {
-		return client;
+	public UUID getClient() {
+		return client.getUuid();
 	}
 
 	/**
+	 * Setter
+	 * 
 	 * @param client
 	 */
 	public void setClient(Client client) {
@@ -89,16 +105,21 @@ public class Reservation extends BaseEntite {
 	}
 
 	/**
-	 * @return
+	 * Getter
+	 * 
+	 * @return chambres
 	 */
 	public List<Chambre> getChambres() {
 		return chambres;
 	}
 
 	/**
-	 * @param chambres
+	 * Setter
+	 * 
+	 * @param chambres to set
 	 */
 	public void setChambres(List<Chambre> chambres) {
 		this.chambres = chambres;
 	}
+
 }

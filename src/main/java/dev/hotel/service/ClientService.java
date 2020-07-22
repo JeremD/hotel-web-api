@@ -26,17 +26,34 @@ public class ClientService {
 		this.clientRepository = clientRepository;
 	}
 
-	// Lister les clients dans une page
+	/**
+	 * Lister les clients dans une page
+	 * 
+	 * @param start
+	 * @param size
+	 * @return
+	 */
 	public List<Client> lister(Integer start, Integer size) {
 		return clientRepository.findAll(PageRequest.of(start, size)).toList();
 	}
 
-	// Afficher un client selon son uuid
+	/**
+	 * Afficher un client selon son uuid
+	 * 
+	 * @param uuid
+	 * @return
+	 */
 	public Optional<Client> afficher(String uuid) {
 		return clientRepository.findById(UUID.fromString(uuid));
 	}
 
-	// Créer un nouveau client
+	/**
+	 * Créer un nouveau client
+	 * 
+	 * @param nom
+	 * @param prenom
+	 * @return
+	 */
 	@Transactional
 	public Client ajouter(String nom, String prenom) {
 		return clientRepository.save(new Client(nom, prenom));
