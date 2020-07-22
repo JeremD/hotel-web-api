@@ -19,7 +19,7 @@ public class ReservationDto {
 	/** dateFin */
 	private LocalDate dateFin;
 
-	/** clientuuid */
+	/** client */
 	private Client client;
 
 	/** chambres */
