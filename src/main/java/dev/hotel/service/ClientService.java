@@ -43,8 +43,8 @@ public class ClientService {
 	 * @param uuid
 	 * @return
 	 */
-	public Optional<Client> afficher(String uuid) {
-		return clientRepository.findById(UUID.fromString(uuid));
+	public Optional<Client> afficher(UUID uuid) {
+		return clientRepository.findById(uuid);
 	}
 
 	/**

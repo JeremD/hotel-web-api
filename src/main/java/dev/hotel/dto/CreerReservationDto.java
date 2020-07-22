@@ -5,41 +5,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import dev.hotel.entite.Chambre;
-import dev.hotel.entite.Client;
 
 public class CreerReservationDto {
 
 	/** dateDebut */
 	@NotNull
-	@NotBlank
-	@JsonFormat(pattern = "YYYY-MM-dd")
 	@JsonProperty("dateDebut")
 	private LocalDate dateDebut;
 
 	/** dateFin */
 	@NotNull
-	@NotBlank
-	@JsonFormat(pattern = "YYYY-MM-dd")
 	@JsonProperty("dateFin")
 	private LocalDate dateFin;
 
 	/** clientUuid */
 	@NotNull
-	@NotBlank
 	@JsonProperty("clientId")
-	private Client client;
+	private UUID clientUuid;
 
 	@NotNull
-	@NotBlank
 	@JsonProperty("chambres")
-	private List<Chambre> chambres = new ArrayList<>();
+	private List<UUID> chambres = new ArrayList<>();
 
 	/**
 	 * Getter
@@ -80,19 +69,19 @@ public class CreerReservationDto {
 	/**
 	 * Getter
 	 * 
-	 * @return client
+	 * @return clientUuid
 	 */
-	public Client getClient() {
-		return client;
+	public UUID getClientUuid() {
+		return clientUuid;
 	}
 
 	/**
 	 * Setter
 	 * 
-	 * @param client to set
+	 * @param clientUuid to set
 	 */
-	public void setClient(Client client) {
-		this.client = client;
+	public void setClientUuid(UUID clientUuid) {
+		this.clientUuid = clientUuid;
 	}
 
 	/**
@@ -100,7 +89,7 @@ public class CreerReservationDto {
 	 * 
 	 * @return chambres
 	 */
-	public List<Chambre> getChambres() {
+	public List<UUID> getChambres() {
 		return chambres;
 	}
 
@@ -109,7 +98,7 @@ public class CreerReservationDto {
 	 * 
 	 * @param chambres to set
 	 */
-	public void setChambres(List<Chambre> chambres) {
+	public void setChambres(List<UUID> chambres) {
 		this.chambres = chambres;
 	}
 

@@ -64,7 +64,7 @@ public class ClientControllerTest {
 		// Stockage du client dans un container optional
 		Optional<Client> listClient = Optional.of(addClient);
 
-		Mockito.when(clientService.afficher("f623d799-e1ec-4f8d-9c95-862a807b589e")).thenReturn(listClient);
+		Mockito.when(clientService.afficher(addClient.getUuid())).thenReturn(listClient);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clients/f623d799-e1ec-4f8d-9c95-862a807b589e"))
 				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())

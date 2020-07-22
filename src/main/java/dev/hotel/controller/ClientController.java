@@ -1,5 +1,7 @@
 package dev.hotel.controller;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -51,10 +53,10 @@ public class ClientController {
 
 	// Lister un client selon l'uuid avec une page
 	@GetMapping("/clients/{uuid}")
-	public ResponseEntity<?> listerClientUUID(@PathVariable String uuid) {
+	public ResponseEntity<?> listerClientUUID(@PathVariable UUID uuid) {
 
 		// Retourner une erreur si paramètres incorrects
-		if (uuid == null || !uuid.matches("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")) {
+		if (uuid == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect request!");
 		}
 
