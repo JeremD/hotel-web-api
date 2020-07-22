@@ -8,10 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CreerClientDto {
 
-	/*
-	 * "nom" : "ALBERT", "prenoms" : "Dimitri"
-	 */
-
 	/** nom */
 	@NotNull
 	@Size(min = 2)

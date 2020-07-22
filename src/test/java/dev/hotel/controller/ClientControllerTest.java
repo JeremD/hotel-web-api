@@ -1,4 +1,4 @@
-package dev.hotel.service;
+package dev.hotel.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -19,7 +20,7 @@ import dev.hotel.entite.Client;
 import dev.hotel.service.ClientService;
 
 @WebMvcTest(ClientController.class)
-public class ClientServiceTest {
+public class ClientControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
@@ -55,7 +56,7 @@ public class ClientServiceTest {
 	}
 
 	@Test
-	void afficherClientParUuid() throws Exception {
+	void afficherClientParUuidTest() throws Exception {
 
 		// Ajout de client
 		Client addClient = new Client("TREV", "Martin");
@@ -72,7 +73,27 @@ public class ClientServiceTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.uuid").value("f623d799-e1ec-4f8d-9c95-862a807b589e"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.nom").value(addClient.getNom()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.prenoms").value(addClient.getPrenoms()));
+	}
 
+	@Test
+	void ajouterClientTest() throws Exception {
+
+		// Ajout de client
+		Client addClient = new Client("BOB", "Dyl");
+		addClient.setUuid(UUID.fromString("9c59df2e-16be-4348-8e7f-2a8e62bc4713"));
+
+		Mockito.when(clientService.ajouter("BOB", "Dyl")).thenReturn(addClient);
+
+		// JSON de test
+		String testJson = "{ \"nom\": \"BOB\", \"prenoms\": \"Dyl\" }";
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/clients").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).content(testJson))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.uuid").isNotEmpty())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.uuid").value("9c59df2e-16be-4348-8e7f-2a8e62bc4713"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.nom").value(addClient.getNom()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.prenoms").value(addClient.getPrenoms()));
 	}
 
 }
