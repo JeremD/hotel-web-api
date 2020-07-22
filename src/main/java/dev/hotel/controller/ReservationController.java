@@ -1,10 +1,7 @@
 package dev.hotel.controller;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +14,6 @@ import dev.hotel.dto.CodeErreur;
 import dev.hotel.dto.CreerReservationDto;
 import dev.hotel.dto.MessageErreurDto;
 import dev.hotel.dto.ReservationDto;
-import dev.hotel.entite.Client;
 import dev.hotel.entite.Reservation;
 import dev.hotel.exceptions.ReservationException;
 import dev.hotel.service.ClientService;
