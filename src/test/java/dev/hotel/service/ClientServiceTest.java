@@ -55,7 +55,7 @@ public class ClientServiceTest {
 	}
 
 	@Test
-	void listerClientParUuid() throws Exception {
+	void afficherClientParUuid() throws Exception {
 
 		// Ajout de client
 		Client addClient = new Client("TREV", "Martin");
