@@ -63,7 +63,7 @@ public class ReservationService {
 		// Ajout de chaque chambre
 		for (UUID uuid : chambresUuid) {
 			Chambre chambre = chambreRepository.findById(uuid)
-					.orElseThrow(() -> new ReservationException("la chambre n'existe pas"));
+					.orElseThrow(() -> new ReservationException("la chambre " + uuid + " n'existe pas"));
 			listChambre.add(chambre);
 		}
 
